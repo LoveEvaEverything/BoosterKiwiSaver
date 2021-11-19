@@ -1,4 +1,4 @@
-package com.booster.investortypescheck;
+package com.booster.investortypescheck.model;
 
 public enum InvestorType {
 

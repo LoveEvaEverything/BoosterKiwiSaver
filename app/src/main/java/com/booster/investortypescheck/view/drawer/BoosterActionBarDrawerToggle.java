@@ -1,8 +1,7 @@
-package com.booster.investortypescheck.view;
+package com.booster.investortypescheck.view.drawer;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;

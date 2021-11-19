@@ -1,5 +1,6 @@
-package com.booster.investortypescheck.view;
+package com.booster.investortypescheck.view.drawer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.booster.investortypescheck.InvestorType;
+import com.booster.investortypescheck.model.InvestorType;
 import com.booster.investortypescheck.R;
 
 import java.util.ArrayList;
@@ -28,8 +29,7 @@ public class DrawerListAdapter extends BaseAdapter {
 
     public ArrayList<View> getViewsList(Context con) {
         LayoutInflater inflater = (LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ArrayList<View> viewList = new ArrayList<View>();
-
+        ArrayList<View> viewList = new ArrayList<>();
         for(InvestorType item : InvestorType.values()) {
             viewList = addMenuText(inflater, viewList, item.toString());
         }
@@ -38,7 +38,8 @@ public class DrawerListAdapter extends BaseAdapter {
 
 
     private ArrayList<View> addMenuText(LayoutInflater inflater, ArrayList<View> viewList, String text) {
-		View v = inflater.inflate(R.layout.drawer_list_title, null);
+		@SuppressLint("InflateParams")
+        View v = inflater.inflate(R.layout.drawer_list_title, null);
 		TextView vehicleAudit = ((TextView) v.findViewById(R.id.textView1));
         vehicleAudit.setText(text);
         viewList.add(v);

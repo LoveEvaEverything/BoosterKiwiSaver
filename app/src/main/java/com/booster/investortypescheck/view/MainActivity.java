@@ -1,29 +1,35 @@
 package com.booster.investortypescheck.view;
 
 
-import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.booster.investortypescheck.R;
-import com.booster.investortypescheck.view.BoosterActionBarDrawerToggle;
-import com.booster.investortypescheck.view.DrawerListAdapter;
+import com.booster.investortypescheck.view.base.BaseFragment;
+import com.booster.investortypescheck.view.base.BaseFragmentActivity;
+import com.booster.investortypescheck.view.base.BoosterFragment;
+import com.booster.investortypescheck.view.base.FragmentFactory;
+import com.booster.investortypescheck.view.base.FragmentType;
+import com.booster.investortypescheck.view.drawer.BoosterActionBarDrawerToggle;
+import com.booster.investortypescheck.view.drawer.DrawerListAdapter;
 
-public class MainActivity extends BaseFragment {
+import static com.booster.investortypescheck.view.base.FragmentType.TYPE_PAGE;
 
-    private DrawerLayout mDrawerLayout;
+public class MainActivity extends BaseFragmentActivity {
+    private BaseFragment currentFragment;
+
     private ListView mDrawerList;
     private DrawerListAdapter mDrawerAdapter;
     private BoosterActionBarDrawerToggle mDrawerToggle;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.main_layout);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerList = findViewById(R.id.left_drawer);
@@ -31,12 +37,39 @@ public class MainActivity extends BaseFragment {
         mDrawerAdapter = new DrawerListAdapter(this);
         mDrawerList.setAdapter(mDrawerAdapter);
 
-        mDrawerLayout.openDrawer(GravityCompat.START);
         mDrawerToggle = new BoosterActionBarDrawerToggle(this, mDrawerLayout);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
+        mDrawerList.setOnItemClickListener(new InvestorTypeClickListener());
 
     }
 
+    @Override
+    public void loadData() {
+
+    }
+
+
+    private void selectInvestorType(final int position, String type) {
+        // update the main content by replacing fragments
+        currentFragment = new FragmentFactory().getFragment(TYPE_PAGE);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if(currentFragment!=null)
+        fragmentManager.beginTransaction().replace(R.id.route_list_container, currentFragment).commit();
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(findViewById(R.id.drawer));
+
+    }
+
+
+    private class InvestorTypeClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            CharSequence optionName = ((TextView) view.findViewById(R.id.textView1)).getText();
+            selectInvestorType(position, optionName.toString());
+            Log.v("GXL", optionName.toString());
+        }
+    }
 
 }
