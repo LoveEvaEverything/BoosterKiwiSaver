@@ -1,7 +1,5 @@
 package com.booster.investortypescheck.model;
 
-import com.anychart.charts.Pie;
-
 import java.util.ArrayList;
 
 public class InvestorTypeBean {

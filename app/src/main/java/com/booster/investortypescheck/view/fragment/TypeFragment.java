@@ -15,7 +15,6 @@ import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 import com.booster.investortypescheck.R;
 import com.booster.investortypescheck.model.InvestorTypeBean;
-import com.booster.investortypescheck.parse.ParseUtils;
 import com.booster.investortypescheck.view.base.BaseFragment;
 
 import java.util.ArrayList;
