@@ -2,6 +2,7 @@ package com.booster.investortypescheck.view;
 
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,20 +17,22 @@ import com.booster.investortypescheck.view.base.BaseFragmentActivity;
 import com.booster.investortypescheck.view.base.BoosterFragment;
 import com.booster.investortypescheck.view.base.FragmentFactory;
 import com.booster.investortypescheck.view.base.FragmentType;
+import com.booster.investortypescheck.view.base.InvestorTypeFactory;
 import com.booster.investortypescheck.view.drawer.BoosterActionBarDrawerToggle;
 import com.booster.investortypescheck.view.drawer.DrawerListAdapter;
+import com.booster.investortypescheck.view.fragment.TypeFragment;
 
 import static com.booster.investortypescheck.view.base.FragmentType.TYPE_PAGE;
 
 public class MainActivity extends BaseFragmentActivity {
-    private BaseFragment currentFragment;
+    private TypeFragment mTypeFragment;
 
     private ListView mDrawerList;
     private DrawerListAdapter mDrawerAdapter;
     private BoosterActionBarDrawerToggle mDrawerToggle;
 
     @Override
-    public void initView() {
+    public void initView(LayoutInflater inflater) {
         setContentView(R.layout.main_layout);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerList = findViewById(R.id.left_drawer);
@@ -52,10 +55,10 @@ public class MainActivity extends BaseFragmentActivity {
 
     private void selectInvestorType(final int position, String type) {
         // update the main content by replacing fragments
-        currentFragment = new FragmentFactory().getFragment(TYPE_PAGE);
+        mTypeFragment = new InvestorTypeFactory().getFragment(type, this);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if(currentFragment!=null)
-        fragmentManager.beginTransaction().replace(R.id.route_list_container, currentFragment).commit();
+        if(mTypeFragment!=null)
+            fragmentManager.beginTransaction().replace(R.id.route_list_container, mTypeFragment).commit();
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(findViewById(R.id.drawer));

@@ -19,7 +19,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         if (getActionBar() != null) {
             getActionBar().setTitle("D booster");
         }
-        initView();
+        initView(null);
         loadData();
     }
 

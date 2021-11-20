@@ -16,12 +16,14 @@ import java.util.ArrayList;
 
 public class ParseUtils {
 
-    public static InvestorTypeBean mDefensiveBean = new InvestorTypeBean();
-    public static InvestorTypeBean mConservativeBean = new InvestorTypeBean();
-    public static InvestorTypeBean mBalancedBean = new InvestorTypeBean();
-    public static InvestorTypeBean mBalancedGrowthBean = new InvestorTypeBean();
-    public static InvestorTypeBean mGrowthBean = new InvestorTypeBean();
-    public static InvestorTypeBean mAggressiveGrowthBean = new InvestorTypeBean();
+    public static InvestorTypeBean mDefensiveBean ;
+    public static InvestorTypeBean mConservativeBean;
+    public static InvestorTypeBean mBalancedBean;
+    public static InvestorTypeBean mBalancedGrowthBean;
+    public static InvestorTypeBean mGrowthBean;
+    public static InvestorTypeBean mAggressiveGrowthBean;
+
+
 
     public static String getJsonString(Context context) {
         String json = null;
