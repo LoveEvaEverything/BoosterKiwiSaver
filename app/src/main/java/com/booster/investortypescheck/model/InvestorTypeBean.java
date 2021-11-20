@@ -7,6 +7,16 @@ public class InvestorTypeBean {
     String name,fundName,fundDetails;
     ArrayList<Mix>  fundInvestmentMix;
 
+    public ArrayList<String> getFunDetailsList() {
+        return funDetailsList;
+    }
+
+    public void setFunDetailsList(ArrayList<String> funDetailsList) {
+        this.funDetailsList = funDetailsList;
+    }
+
+    ArrayList<String> funDetailsList;
+
     public String getName() {
         return name;
     }

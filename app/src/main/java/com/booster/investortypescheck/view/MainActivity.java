@@ -42,7 +42,6 @@ public class MainActivity extends BaseFragmentActivity {
 
         mDrawerToggle = new BoosterActionBarDrawerToggle(this, mDrawerLayout);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-
         mDrawerList.setOnItemClickListener(new InvestorTypeClickListener());
 
     }
@@ -62,7 +61,6 @@ public class MainActivity extends BaseFragmentActivity {
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(findViewById(R.id.drawer));
-
     }
 
 

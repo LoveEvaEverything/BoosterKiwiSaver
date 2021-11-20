@@ -4,8 +4,10 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
  <LinearLayout
+     android:id="@+id/fund_details_id"
      android:layout_width="match_parent"
      android:layout_weight="3"
+     android:orientation="vertical"
      android:layout_height="wrap_content"/>
 
     <RelativeLayout

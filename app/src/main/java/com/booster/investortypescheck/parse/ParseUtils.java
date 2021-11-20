@@ -50,19 +50,27 @@ public class ParseUtils {
             InvestorTypeBean typeBean;
             InvestorTypeBean.Mix mixBean;
             ArrayList<InvestorTypeBean.Mix> mixArrayList;
+            ArrayList<String> detailsList;
 
             JSONObject jsonObject;
             JSONObject mixArrayObject;
+            JSONObject detailsArrayObject;
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 typeBean = new InvestorTypeBean();
                 mixArrayList = new ArrayList<>();
-
+                detailsList = new ArrayList<>();
                 jsonObject = (JSONObject) jsonArray.get(i);
                 String name = jsonObject.getString("name");
                 String fundName = jsonObject.getString("fundName");
-                String fundDetails = jsonObject.getString("fundDetails");
+                JSONArray detailsArray = jsonObject.getJSONArray("fundDetails");
+                for (int d = 0; d < detailsArray.length(); d++){
+                    detailsList.add((String)detailsArray.get(d));
+                }
+
+                typeBean.setFunDetailsList(detailsList);
+
 
                 JSONArray mixArray = jsonObject.getJSONArray("fundInvestmentMix");
                 for (int j = 0; j < mixArray.length(); j++) {
@@ -75,7 +83,7 @@ public class ParseUtils {
                 }
                 typeBean.setName(name);
                 typeBean.setFundName(fundName);
-                typeBean.setFundDetails(fundDetails);
+//                typeBean.setFundDetails(fundDetails);
                 typeBean.setFundInvestmentMix(mixArrayList);
 
                 if(name.equals(InvestorType.DEFENSIVE.toString())) {
