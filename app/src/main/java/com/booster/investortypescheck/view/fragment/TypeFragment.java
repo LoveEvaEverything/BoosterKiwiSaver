@@ -1,7 +1,9 @@
 package com.booster.investortypescheck.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import com.anychart.AnyChart;
@@ -18,14 +20,16 @@ import com.booster.investortypescheck.view.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@SuppressLint("SetTextI18n")
 public class TypeFragment extends BaseFragment {
 
 
     InvestorTypeBean investorTypeBean;
     AnyChartView anyChartView;
     LinearLayout detailsLayout;
-
+    LinearLayout.LayoutParams params =new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT);
     public TypeFragment(InvestorTypeBean investorTypeBean) {
         this.investorTypeBean = investorTypeBean;
     }
@@ -34,7 +38,6 @@ public class TypeFragment extends BaseFragment {
     @Override
     public void initView(LayoutInflater inflater) {
         rootView = inflater.inflate(R.layout.type_layout,null);
-
         anyChartView = rootView.findViewById(R.id.any_chart_view);
         detailsLayout = rootView.findViewById(R.id.fund_details_id);
         anyChartView.setProgressBar(rootView.findViewById(R.id.progress_bar));
@@ -54,5 +57,19 @@ public class TypeFragment extends BaseFragment {
         pie.legend().title().text("Target investment mix").padding(0d, 0d, 10d, 0d);
         pie.legend().position("center-bottom").itemsLayout(LegendLayout.HORIZONTAL).align(Align.CENTER);
         anyChartView.setChart(pie);
+
+
+        for (String text:investorTypeBean.getFunDetailsList()) {
+            addText(text);
+        }
+
+    }
+    private void addText(String text) {
+        TextView textView = new TextView(getActivity());
+        textView.setText("\u2022  "+ text);
+        textView.setTextSize(18);
+        params.setMargins(10,10,10,10);
+        textView.setLayoutParams(params);
+        detailsLayout.addView(textView);
     }
 }

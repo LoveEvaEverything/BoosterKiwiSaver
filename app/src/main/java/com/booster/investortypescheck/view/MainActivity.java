@@ -8,25 +8,25 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.booster.investortypescheck.R;
+import com.booster.investortypescheck.model.InvestorType;
+import com.booster.investortypescheck.parse.ParseUtils;
 import com.booster.investortypescheck.view.base.BaseFragment;
 import com.booster.investortypescheck.view.base.BaseFragmentActivity;
-import com.booster.investortypescheck.view.base.BoosterFragment;
-import com.booster.investortypescheck.view.base.FragmentFactory;
-import com.booster.investortypescheck.view.base.FragmentType;
 import com.booster.investortypescheck.view.base.InvestorTypeFactory;
 import com.booster.investortypescheck.view.drawer.BoosterActionBarDrawerToggle;
 import com.booster.investortypescheck.view.drawer.DrawerListAdapter;
 import com.booster.investortypescheck.view.fragment.TypeFragment;
 
-import static com.booster.investortypescheck.view.base.FragmentType.TYPE_PAGE;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.booster.investortypescheck.parse.ParseUtils.parseJason;
 
 public class MainActivity extends BaseFragmentActivity {
     private TypeFragment mTypeFragment;
-
     private ListView mDrawerList;
     private DrawerListAdapter mDrawerAdapter;
     private BoosterActionBarDrawerToggle mDrawerToggle;
@@ -44,20 +44,20 @@ public class MainActivity extends BaseFragmentActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerList.setOnItemClickListener(new InvestorTypeClickListener());
 
+        parseJason(ParseUtils.getJsonString(this));
     }
 
     @Override
     public void loadData() {
-
+        fragmentManager = getSupportFragmentManager();
     }
-
-
+    FragmentManager fragmentManager;
     private void selectInvestorType(final int position, String type) {
-        // update the main content by replacing fragments
+
         mTypeFragment = new InvestorTypeFactory().getFragment(type, this);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if(mTypeFragment!=null)
-            fragmentManager.beginTransaction().replace(R.id.route_list_container, mTypeFragment).commit();
+        if(mTypeFragment!=null) {
+            fragmentManager.beginTransaction().replace(R.id.list_container,mTypeFragment).commit();
+        }
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(findViewById(R.id.drawer));

@@ -3,6 +3,12 @@ package com.booster.investortypescheck.parse;
 import android.content.Context;
 import android.util.Log;
 
+import com.anychart.AnyChart;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Pie;
+import com.anychart.enums.Align;
+import com.anychart.enums.LegendLayout;
 import com.booster.investortypescheck.model.InvestorType;
 import com.booster.investortypescheck.model.InvestorTypeBean;
 
@@ -13,8 +19,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ParseUtils {
+
+    public static Map<InvestorType, InvestorTypeBean> typeBeanMap;
 
     public static InvestorTypeBean mDefensiveBean ;
     public static InvestorTypeBean mConservativeBean;
@@ -54,8 +64,6 @@ public class ParseUtils {
 
             JSONObject jsonObject;
             JSONObject mixArrayObject;
-            JSONObject detailsArrayObject;
-
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 typeBean = new InvestorTypeBean();
@@ -88,22 +96,47 @@ public class ParseUtils {
 
                 if(name.equals(InvestorType.DEFENSIVE.toString())) {
                     mDefensiveBean = typeBean;
+//                    mDefensiveBean.setPie(getPieChart(mDefensiveBean));
                 }else if(name.equals(InvestorType.CONSERVATIVE.toString())){
                     mConservativeBean =typeBean;
+//                    mConservativeBean.setPie(getPieChart(mConservativeBean));
                 } else if(name.equals(InvestorType.BALANCED.toString())){
                     mBalancedBean =typeBean;
+//                    mBalancedBean.setPie(getPieChart(mBalancedBean));
                 }else if(name.equals(InvestorType.BALANCE_GROWTH.toString())){
                     mBalancedGrowthBean =typeBean;
+//                    mBalancedGrowthBean.setPie(getPieChart(mBalancedGrowthBean));
                 }else if(name.equals(InvestorType.GROWTH.toString())){
                     mGrowthBean =typeBean;
+//                    mGrowthBean.setPie(getPieChart(mGrowthBean));
                 } else if(name.equals(InvestorType.AGGRESSIVE_GROWTH.toString())){
                     mAggressiveGrowthBean =typeBean;
+//                    mAggressiveGrowthBean.setPie(getPieChart(mAggressiveGrowthBean));
+
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+        Log.v("GXL", "loading finished");
         return true;
+    }
+
+
+
+    public static Pie getPieChart(InvestorTypeBean investorTypeBean) {
+        Pie pie = AnyChart.pie();
+        List<DataEntry> data = new ArrayList<>();
+        for (InvestorTypeBean.Mix item: investorTypeBean.getFundInvestmentMix()) {
+            data.add(new ValueDataEntry(item.getSectionTitle(), item.getPercentage()));
+        }
+        pie.data(data);
+        pie.labels().position("outside");
+        pie.legend().title().enabled(true);
+        pie.legend().title().align(Align.LEFT);
+        pie.legend().title().text("Target investment mix").padding(0d, 0d, 10d, 0d);
+        pie.legend().position("center-bottom").itemsLayout(LegendLayout.HORIZONTAL).align(Align.CENTER);
+        return pie;
     }
 }

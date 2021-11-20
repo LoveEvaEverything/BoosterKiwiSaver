@@ -1,11 +1,14 @@
 package com.booster.investortypescheck.model;
 
+import com.anychart.charts.Pie;
+
 import java.util.ArrayList;
 
 public class InvestorTypeBean {
 
     String name,fundName,fundDetails;
     ArrayList<Mix>  fundInvestmentMix;
+    ArrayList<String> funDetailsList;
 
     public ArrayList<String> getFunDetailsList() {
         return funDetailsList;
@@ -15,7 +18,6 @@ public class InvestorTypeBean {
         this.funDetailsList = funDetailsList;
     }
 
-    ArrayList<String> funDetailsList;
 
     public String getName() {
         return name;
