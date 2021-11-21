@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.booster.investortypescheck.view.base.BaseFragmentActivity;
 import com.booster.investortypescheck.view.base.InvestorTypeFactory;
 import com.booster.investortypescheck.view.drawer.BoosterActionBarDrawerToggle;
 import com.booster.investortypescheck.view.drawer.DrawerListAdapter;
+import com.booster.investortypescheck.view.fragment.QuestionFragment;
 import com.booster.investortypescheck.view.fragment.TypeFragment;
 
 import java.util.HashMap;
@@ -27,15 +29,19 @@ import static com.booster.investortypescheck.parse.ParseUtils.parseJason;
 
 public class MainActivity extends BaseFragmentActivity {
     private TypeFragment mTypeFragment;
+    private QuestionFragment mQuestionFragment;
+    private Button questionBt;
     private ListView mDrawerList;
     private DrawerListAdapter mDrawerAdapter;
     private BoosterActionBarDrawerToggle mDrawerToggle;
+    FragmentManager fragmentManager;
 
     @Override
     public void initView(LayoutInflater inflater) {
         setContentView(R.layout.main_layout);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerList = findViewById(R.id.left_drawer);
+
 
         mDrawerAdapter = new DrawerListAdapter(this);
         mDrawerList.setAdapter(mDrawerAdapter);
@@ -44,6 +50,9 @@ public class MainActivity extends BaseFragmentActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerList.setOnItemClickListener(new InvestorTypeClickListener());
 
+        questionBt = findViewById(R.id.question_bt);
+        questionBt.setOnClickListener(new QuestionClickListener());
+
         parseJason(ParseUtils.getJsonString(this));
     }
 
@@ -51,7 +60,7 @@ public class MainActivity extends BaseFragmentActivity {
     public void loadData() {
         fragmentManager = getSupportFragmentManager();
     }
-    FragmentManager fragmentManager;
+
     private void selectInvestorType(final int position, String type) {
 
         mTypeFragment = new InvestorTypeFactory().getFragment(type, this);
@@ -61,6 +70,23 @@ public class MainActivity extends BaseFragmentActivity {
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(findViewById(R.id.drawer));
+    }
+
+
+    private void selectQuestion() {
+
+        mQuestionFragment = new QuestionFragment();
+        fragmentManager.beginTransaction().replace(R.id.list_container,mQuestionFragment).commit();
+        // update selected item and title, then close the drawer
+        mDrawerLayout.closeDrawer(findViewById(R.id.drawer));
+    }
+
+    private class QuestionClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            selectQuestion();
+        }
     }
 
 
