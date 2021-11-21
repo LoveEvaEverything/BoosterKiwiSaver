@@ -1,13 +1,23 @@
 package com.booster.investortypescheck.view.fragment;
 
+import static com.booster.investortypescheck.model.InvestorType.AGGRESSIVE_GROWTH;
+import static com.booster.investortypescheck.model.InvestorType.BALANCED;
+import static com.booster.investortypescheck.model.InvestorType.BALANCE_GROWTH;
+import static com.booster.investortypescheck.model.InvestorType.CONSERVATIVE;
+import static com.booster.investortypescheck.model.InvestorType.DEFENSIVE;
+import static com.booster.investortypescheck.model.InvestorType.GROWTH;
+import static com.booster.investortypescheck.view.utils.Constants.SCORE_KEY_SP;
+
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.preference.PreferenceManager;
 
 import com.booster.investortypescheck.R;
 import com.booster.investortypescheck.view.base.BaseFragment;
@@ -15,13 +25,10 @@ import com.booster.investortypescheck.view.base.InvestorTypeFactory;
 
 import java.util.ArrayList;
 
-import static com.booster.investortypescheck.model.InvestorType.AGGRESSIVE_GROWTH;
-import static com.booster.investortypescheck.model.InvestorType.BALANCED;
-import static com.booster.investortypescheck.model.InvestorType.BALANCE_GROWTH;
-import static com.booster.investortypescheck.model.InvestorType.CONSERVATIVE;
-import static com.booster.investortypescheck.model.InvestorType.DEFENSIVE;
-import static com.booster.investortypescheck.model.InvestorType.GROWTH;
-
+/**
+ * The fragment shows the Question page.
+ * @author sgao
+ */
 @SuppressLint({"SetTextI18n","CutPasteId"})
 public class QuestionFragment extends BaseFragment {
 
@@ -75,11 +82,24 @@ public class QuestionFragment extends BaseFragment {
     }
 
 
+    @SuppressLint("CommitPrefEdits")
     public void loadResultPage() {
         questionLayout.removeAllViews();
         addText("Your Total Score is "+ totalScore);
-        addText("You are a "+ getInvestorType() + " investor.");
+        type = getInvestorType();
+        addText("You are a "+ type + " investor.");
         nextBt.setText("SHOW");
+        if(getContext()!=null) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            prefs.edit().putInt(SCORE_KEY_SP, totalScore);
+        }
+        nextBt.setOnClickListener(v -> {
+            TypeFragment mTypeFragment = new InvestorTypeFactory().getFragment(type, getContext());
+            if(mTypeFragment!=null && getActivity()!=null) {
+                getActivity().getSupportFragmentManager().
+                        beginTransaction().replace(R.id.list_container,mTypeFragment).commit();
+            }
+        });
     }
 
 
@@ -144,6 +164,8 @@ public class QuestionFragment extends BaseFragment {
                 break;
             case 5:
                 setAnswerData(answer05List);
+                break;
+            default:
                 break;
 
         }

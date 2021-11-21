@@ -1,7 +1,12 @@
 package com.booster.investortypescheck.model;
 
+import androidx.annotation.NonNull;
+
 public enum InvestorType {
 
+    /**
+     * Investor type enum
+     */
     DEFENSIVE ("Defensive"),
     CONSERVATIVE ("Conservative"),
     BALANCED ("Balanced"),
@@ -15,6 +20,8 @@ public enum InvestorType {
         typeName = s;
     }
 
+    @NonNull
+    @Override
     public String toString() {
         return this.typeName;
     }

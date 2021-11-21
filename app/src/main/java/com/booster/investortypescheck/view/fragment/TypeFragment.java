@@ -19,6 +19,10 @@ import com.booster.investortypescheck.view.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Show the Investor type page including description and pie chart
+ * @author sgao
+ */
 @SuppressLint("SetTextI18n")
 public class TypeFragment extends BaseFragment {
 

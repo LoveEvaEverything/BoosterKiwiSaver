@@ -1,6 +1,8 @@
 package com.booster.investortypescheck.view;
 
 
+import static com.booster.investortypescheck.parse.ParseUtils.parseJason;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.booster.investortypescheck.R;
-import com.booster.investortypescheck.model.InvestorType;
 import com.booster.investortypescheck.parse.ParseUtils;
-import com.booster.investortypescheck.view.base.BaseFragment;
 import com.booster.investortypescheck.view.base.BaseFragmentActivity;
 import com.booster.investortypescheck.view.base.InvestorTypeFactory;
 import com.booster.investortypescheck.view.drawer.BoosterActionBarDrawerToggle;
@@ -22,15 +22,15 @@ import com.booster.investortypescheck.view.drawer.DrawerListAdapter;
 import com.booster.investortypescheck.view.fragment.QuestionFragment;
 import com.booster.investortypescheck.view.fragment.TypeFragment;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.booster.investortypescheck.parse.ParseUtils.parseJason;
-
+/**The only activity in APP.
+ * Customer can select the item in menu, then show the views.
+ * @author sgao
+ */
 public class MainActivity extends BaseFragmentActivity {
     private TypeFragment mTypeFragment;
     private QuestionFragment mQuestionFragment;
     private Button questionBt;
+    private Button submitBt;
     private ListView mDrawerList;
     private DrawerListAdapter mDrawerAdapter;
     private BoosterActionBarDrawerToggle mDrawerToggle;
@@ -52,7 +52,9 @@ public class MainActivity extends BaseFragmentActivity {
 
         questionBt = findViewById(R.id.question_bt);
         questionBt.setOnClickListener(new QuestionClickListener());
+        submitBt = findViewById(R.id.submit_bt);
 
+        
         parseJason(ParseUtils.getJsonString(this));
     }
 
@@ -74,7 +76,6 @@ public class MainActivity extends BaseFragmentActivity {
 
 
     private void selectQuestion() {
-
         mQuestionFragment = new QuestionFragment();
         fragmentManager.beginTransaction().replace(R.id.list_container,mQuestionFragment).commit();
         // update selected item and title, then close the drawer
