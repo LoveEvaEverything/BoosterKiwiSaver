@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/question_layout"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="TODO"
+        android:src="@drawable/icon" />
+    </LinearLayout>
+
+    <Button
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="WELCOME!"
+        android:id="@+id/login_bt"
+        android:background="@color/green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
