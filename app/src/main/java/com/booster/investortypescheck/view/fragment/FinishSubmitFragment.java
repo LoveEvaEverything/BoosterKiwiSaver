@@ -1,7 +1,6 @@
 package com.booster.investortypescheck.view.fragment;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 
 import com.booster.investortypescheck.R;
@@ -17,17 +16,13 @@ public class FinishSubmitFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.finished_layout,null);
 
         Button confirmBT = rootView.findViewById(R.id.comfirm_bt);
-        confirmBT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        confirmBT.setOnClickListener(v -> moveToIntroductionPage());
     }
 
-    private void moveToIntroductionPage()
-    {
-
+    private void moveToIntroductionPage() {
+        IntroductionFragment fragment = new IntroductionFragment();
+        getActivity().getSupportFragmentManager().
+                beginTransaction().replace(R.id.list_container,fragment).commit();
     }
 
 
