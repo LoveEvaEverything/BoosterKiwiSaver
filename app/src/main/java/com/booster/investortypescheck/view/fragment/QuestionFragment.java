@@ -91,7 +91,7 @@ public class QuestionFragment extends BaseFragment {
         nextBt.setText("SHOW");
         if(getContext()!=null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-            prefs.edit().putInt(SCORE_KEY_SP, totalScore);
+            prefs.edit().putInt(SCORE_KEY_SP, totalScore).apply();
         }
         nextBt.setOnClickListener(v -> {
             TypeFragment mTypeFragment = new InvestorTypeFactory().getFragment(type, getContext());
