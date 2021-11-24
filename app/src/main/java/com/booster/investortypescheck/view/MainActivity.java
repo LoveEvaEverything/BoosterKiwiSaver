@@ -127,7 +127,7 @@ public class MainActivity extends BaseFragmentActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             CharSequence optionName = ((TextView) view.findViewById(R.id.textView1)).getText();
             selectInvestorType(position, optionName.toString());
-            Log.v("GXL", optionName.toString());
+//            Log.v("GXL", optionName.toString());
         }
     }
 

@@ -2,11 +2,8 @@ package com.booster.investortypescheck.view
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
-import com.booster.investortypescheck.R
-import com.booster.investortypescheck.databinding.LoginLayoutBinding
-import com.booster.investortypescheck.view.entities.Login
+import com.booster.investortypescheck.view.observer.LoginObserver
 
 /**
  * Login page.
@@ -15,16 +12,12 @@ import com.booster.investortypescheck.view.entities.Login
  * @author sgao
  */
 class LoginActivity : FragmentActivity() {
-    private lateinit var data: Login
+
+    lateinit var workUtil:LoginObserver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: LoginLayoutBinding =
-            DataBindingUtil.setContentView(this, R.layout.login_layout)
-        data = Login();
-        binding.logins = data
-        binding.activity = this
-        data.loginButtonName = "Hello";
-
+        workUtil = LoginObserver(this)
+        lifecycle.addObserver(workUtil)
     }
 
 
@@ -35,7 +28,7 @@ class LoginActivity : FragmentActivity() {
     }
 
     fun changeButtonText() {
-        data.loginButtonName = "Changed";
+        workUtil.data.loginButtonName = "Changed";
     }
 
 

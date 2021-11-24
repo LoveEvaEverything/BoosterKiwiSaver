@@ -49,7 +49,7 @@ public class ParseUtils {
             ex.printStackTrace();
             return null;
         }
-        Log.v("GXL",json);
+//        Log.v("GXL",json);
         return json;
     }
 
