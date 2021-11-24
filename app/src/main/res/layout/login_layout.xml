@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="bottom"
-    android:orientation="vertical">
-    <LinearLayout
-        android:id="@+id/question_layout"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:padding="10dp"
-        android:gravity="center"
-        android:layout_height="0dp"
-        android:orientation="vertical">
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="TODO"
-        android:src="@drawable/icon" />
-    </LinearLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:text="WELCOME!"
-        android:id="@+id/login_bt"
-        android:background="@color/green"
+    <data>
+        <variable
+            name="logins"
+            type="com.booster.investortypescheck.view.entities.Login"/>
+        <variable name="activity" type="com.booster.investortypescheck.view.LoginActivity" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/question_layout"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="TODO"
+                android:src="@drawable/ic_action_menu" />
+        </LinearLayout>
+        <Button
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="@={logins.changeButtonName}"
+            android:onClick="@{()-> activity.changeButtonText()}"
+            android:background="@color/green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:onClick="@{()-> activity.moveToMainPage()}"
+
+            android:text="@={logins.loginButtonName}"
+            android:background="@color/green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>
