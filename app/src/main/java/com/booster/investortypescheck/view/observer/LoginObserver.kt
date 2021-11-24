@@ -2,16 +2,11 @@ package com.booster.investortypescheck.view.observer
 
 import android.util.Log
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.booster.investortypescheck.R
 import com.booster.investortypescheck.databinding.LoginLayoutBinding
 import com.booster.investortypescheck.view.LoginActivity
 import com.booster.investortypescheck.view.entities.Login
-
-
 
 
 /**
@@ -19,25 +14,8 @@ import com.booster.investortypescheck.view.entities.Login
  *
  * @author sgao
  */
-class LoginObserver(private var activity: LoginActivity) : LifecycleObserver {
+class LoginObserver (private var viewModel: LoginViewModel): LifecycleObserver {
     private var whetherToCount = true
-    lateinit var data: Login
-
-    private lateinit var viewModel: LoginViewModel
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun create() {
-        val binding: LoginLayoutBinding =
-            DataBindingUtil.setContentView(activity, R.layout.login_layout)
-        data = Login();
-        binding.logins = data
-        binding.activity = activity
-        data.loginButtonName = "Hello"
-
-//        viewModel = ViewModelProvider(activity)[LoginViewModel::class.java]
-
-        viewModel = ViewModelProvider(activity, LoginViewModelFactory(100))[LoginViewModel::class.java]
-    }
-
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun resume() {
         whetherToCount = true
@@ -45,9 +23,9 @@ class LoginObserver(private var activity: LoginActivity) : LifecycleObserver {
             while (whetherToCount) {
                 try {
                     Thread.sleep(1000)
-                    viewModel.count++
-                    Log.d(TAG, "start: ${viewModel.count}")
-                    if(viewModel.count == 110)
+                    viewModel.add()
+                    Log.d(TAG, "start: ${viewModel.getCountData()}")
+                    if (viewModel.getCountData() > 110)
                         whetherToCount = false
                 } catch (e: InterruptedException) {
                     e.printStackTrace()

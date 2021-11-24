@@ -2,10 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable
-            name="logins"
-            type="com.booster.investortypescheck.view.entities.Login"/>
+<!--        <variable-->
+<!--            name="logins"-->
+<!--            type="com.booster.investortypescheck.view.entities.Login"/>-->
         <variable name="activity" type="com.booster.investortypescheck.view.LoginActivity" />
+
+        <variable
+            name="loginModel"
+            type="com.booster.investortypescheck.view.observer.LoginViewModel" />
     </data>
 
     <LinearLayout
@@ -29,11 +33,16 @@
                 android:contentDescription="TODO"
                 android:src="@drawable/ic_action_menu" />
         </LinearLayout>
+        <TextView
+            android:gravity="center"
+            android:text="@{Integer.toString(loginModel.liveData.count)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <Button
             android:textSize="20dp"
             android:textStyle="bold"
-            android:text="@={logins.changeButtonName}"
-            android:onClick="@{()-> activity.changeButtonText()}"
+            android:text="@={loginModel.liveData.changeButtonName}"
+            android:onClick="@{()-> loginModel.changeButtonText()}"
             android:background="@color/green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -42,7 +51,7 @@
             android:textStyle="bold"
             android:onClick="@{()-> activity.moveToMainPage()}"
 
-            android:text="@={logins.loginButtonName}"
+            android:text="@={loginModel.liveData.loginButtonName}"
             android:background="@color/green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

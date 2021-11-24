@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 /**
  * Created by sgao on 25/11/2021 08:42
  **/
-class LoginViewModelFactory(private var count:Int) : ViewModelProvider.Factory {
+class LoginViewModelFactory(var count:Int) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
+
         return  LoginViewModel(count) as T;
     }
 }

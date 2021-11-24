@@ -20,4 +20,10 @@ class Login: BaseObservable() {
             field = value
             notifyPropertyChanged(BR.changeButtonName)
         }
+    @get:Bindable
+    var count:Int = 0
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.count)
+        }
 }
