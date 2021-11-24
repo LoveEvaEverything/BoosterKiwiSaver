@@ -11,6 +11,9 @@ import com.booster.investortypescheck.databinding.LoginLayoutBinding
 import com.booster.investortypescheck.view.LoginActivity
 import com.booster.investortypescheck.view.entities.Login
 
+
+
+
 /**
  * Created by sgao on 24/11/2021 14:22
  *
@@ -30,7 +33,9 @@ class LoginObserver(private var activity: LoginActivity) : LifecycleObserver {
         binding.activity = activity
         data.loginButtonName = "Hello"
 
-        viewModel = ViewModelProvider(activity)[LoginViewModel::class.java]
+//        viewModel = ViewModelProvider(activity)[LoginViewModel::class.java]
+
+        viewModel = ViewModelProvider(activity, LoginViewModelFactory(100))[LoginViewModel::class.java]
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -42,6 +47,8 @@ class LoginObserver(private var activity: LoginActivity) : LifecycleObserver {
                     Thread.sleep(1000)
                     viewModel.count++
                     Log.d(TAG, "start: ${viewModel.count}")
+                    if(viewModel.count == 110)
+                        whetherToCount = false
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
