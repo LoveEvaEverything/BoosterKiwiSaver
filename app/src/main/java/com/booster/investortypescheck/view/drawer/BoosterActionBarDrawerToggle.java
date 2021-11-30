@@ -27,7 +27,7 @@ public class BoosterActionBarDrawerToggle extends ActionBarDrawerToggle {
     @Override
     public void onDrawerOpened(View drawerView) {
         if( mActivity.getActionBar()!=null) {
-            mActivity.getActionBar().setTitle("D booster");
+            mActivity.getActionBar().setTitle("D Tester");
         }
         mActivity.invalidateOptionsMenu(); // creates call to
     }

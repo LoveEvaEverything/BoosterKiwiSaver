@@ -2,14 +2,21 @@ package com.booster.investortypescheck.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.booster.investortypescheck.R
 import com.booster.investortypescheck.databinding.LoginLayoutBinding
+import com.booster.investortypescheck.view.observer.LoginLiveData
 import com.booster.investortypescheck.view.observer.LoginObserver
 import com.booster.investortypescheck.view.observer.LoginViewModel
 import com.booster.investortypescheck.view.observer.LoginViewModelFactory
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Login page.
@@ -17,14 +24,15 @@ import com.booster.investortypescheck.view.observer.LoginViewModelFactory
  *
  * @author sgao
  */
+@DelicateCoroutinesApi
 class LoginActivity : FragmentActivity() {
-
+    private lateinit var binding: LoginLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: LoginLayoutBinding = DataBindingUtil.setContentView(this, R.layout.login_layout)
+        binding = DataBindingUtil.setContentView(this, R.layout.login_layout)
         binding.activity = this
-        //        viewModel = ViewModelProvider(activity)[LoginViewModel::class.java]
-        val viewModel = ViewModelProvider(this, LoginViewModelFactory(100))[LoginViewModel::class.java]
+        val viewModel:LoginViewModel = ViewModelProvider(this, LoginViewModelFactory(10))[LoginViewModel::class.java]
+        viewModel.liveData.observe(this, { t -> if(t.responseCode ==200) moveToMainPage() })
         lifecycle.addObserver(LoginObserver(viewModel))
         binding.loginModel = viewModel
         binding.activity = this
@@ -39,4 +47,15 @@ class LoginActivity : FragmentActivity() {
     }
 
 
+    class GlobalCoroutineExceptionHandler(private val errCode: Int, private val errMsg: String = "", private val report: Boolean = false) : CoroutineExceptionHandler {
+        override val key: CoroutineContext.Key<*>
+        get() = CoroutineExceptionHandler
+
+        override fun handleException(context: CoroutineContext, exception: Throwable) {
+            val msg =  exception.stackTraceToString()
+            Log.e("$errCode","GlobalCoroutineExceptionHandler:${msg}")
+        }
+    }
+
 }
+

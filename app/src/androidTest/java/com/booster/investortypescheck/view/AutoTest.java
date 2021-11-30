@@ -42,15 +42,15 @@ public class AutoTest {
 
     @Test
     public void autoTest() {
-        ViewInteraction button = onView(
-                allOf(withId(R.id.login_bt), withText("WELCOME!"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        button.perform(click());
+//        ViewInteraction button = onView(
+//                allOf(withId(R.id.login_bt), withText("WELCOME!"),
+//                        childAtPosition(
+//                                childAtPosition(
+//                                        withId(android.R.id.content),
+//                                        0),
+//                                1),
+//                        isDisplayed()));
+//        button.perform(click());
 
         ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.action_menu), withContentDescription("MENU"),
@@ -101,7 +101,7 @@ public class AutoTest {
         button2.perform(click());
 
         ViewInteraction button3 = onView(
-                allOf(withText("Within 2 years – you need a DEFENSIVE TYPE fund"),
+                allOf(withText("Within 2 years you need a DEFENSIVE TYPE fund"),
                         childAtPosition(
                                 allOf(withId(R.id.answer_layout),
                                         childAtPosition(

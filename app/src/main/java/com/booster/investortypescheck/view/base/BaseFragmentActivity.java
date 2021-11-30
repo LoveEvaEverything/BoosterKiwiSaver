@@ -17,7 +17,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActionBar() != null) {
-            getActionBar().setTitle("D booster");
+            getActionBar().setTitle("D Tester");
         }
         initView(null);
         loadData();

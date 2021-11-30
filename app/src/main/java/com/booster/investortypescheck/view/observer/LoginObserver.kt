@@ -1,12 +1,8 @@
 package com.booster.investortypescheck.view.observer
 
 import android.util.Log
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
-import com.booster.investortypescheck.R
-import com.booster.investortypescheck.databinding.LoginLayoutBinding
-import com.booster.investortypescheck.view.LoginActivity
-import com.booster.investortypescheck.view.entities.Login
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 
 /**
@@ -16,6 +12,7 @@ import com.booster.investortypescheck.view.entities.Login
  */
 class LoginObserver (private var viewModel: LoginViewModel): LifecycleObserver {
     private var whetherToCount = true
+    @DelicateCoroutinesApi
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun resume() {
         whetherToCount = true
@@ -23,10 +20,11 @@ class LoginObserver (private var viewModel: LoginViewModel): LifecycleObserver {
             while (whetherToCount) {
                 try {
                     Thread.sleep(1000)
-                    viewModel.add()
-                    Log.d(TAG, "start: ${viewModel.getCountData()}")
-                    if (viewModel.getCountData() > 110)
+                    viewModel.countDown()
+                    if (viewModel.getCountData() <=1) {
+                        viewModel.autoLogin()
                         whetherToCount = false
+                    }
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
@@ -39,12 +37,13 @@ class LoginObserver (private var viewModel: LoginViewModel): LifecycleObserver {
         whetherToCount = false
     }
 
+    @DelicateCoroutinesApi
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
         viewModel.count = 0
     }
 
     companion object {
-        private const val TAG = "WorkUtil"
+        private const val TAG = "Observer"
     }
 }

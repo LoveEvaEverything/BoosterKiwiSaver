@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.booster.investortypescheck.view.observer.LoginViewModel;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,6 +17,11 @@ public class ParseUtilsTest {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         String data = ParseUtils.getJsonString(context);
         Assert.assertNotNull(data);
+    }
+
+    @Test
+    public void testParseUtilsTest02() {
+//        new LoginViewModel(1).testCoroutineContext();
     }
 
 
